@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
 	if (req.query.album) {
 		try {
 			const track = await Track.find({album: req.query.album}).sort({number: 1});
+
 			if (!track) {
 				return res.status(404).send({message: "Not found"})
 			} return res.send(track);

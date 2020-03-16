@@ -4,13 +4,21 @@ import {Container} from "reactstrap";
 import Artists from "./containers/Artists/Artists";
 import Artist from "./containers/Artist/Artist";
 import Album from "./containers/Album/Album";
+import Register from "./containers/Register/Register";
+import Toolbar from "./components/UI/Toolbar/Toolbar";
+import Login from "./containers/Login/Login";
 
 function App() {
   return (
     <Fragment>
+        <header>
+            <Toolbar/>
+        </header>
       <Container style={{marginTop: '20px'}}>
         <Switch>
           <Route path="/" exact component={Artists} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/login" exact component={Login} />
           <Route path="/artists/:id" exact component={Artist} />
           <Route path="/albums/:id" exact component={Album} />
         </Switch>

@@ -10,6 +10,7 @@ class Artist extends Component {
 		this.props.fetchArtistAlbums(this.props.match.params.id);
 	}
 
+
 	render() {
 		return (
 			<Fragment>

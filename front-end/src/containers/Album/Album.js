@@ -4,11 +4,14 @@ import {connect} from "react-redux";
 import {fetchAlbumTracks} from "../../store/actions/tracksActions";
 import TracksList from "../../components/TracksList/TracksList";
 
+
 class Album extends Component {
+
 	componentDidMount() {
 		this.props.fetchAlbum(this.props.match.params.id);
 		this.props.fetchAlbumTracks(this.props.match.params.id);
 	}
+
 
 	render() {
 		return (

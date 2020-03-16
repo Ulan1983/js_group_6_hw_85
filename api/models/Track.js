@@ -19,7 +19,7 @@ const TrackSchema = new Schema({
 		type: Schema.Types.ObjectID,
 		ref: "Album",
 		required: true
-	}
+	},
 });
 
 const Track = mongoose.model('Track', TrackSchema);
