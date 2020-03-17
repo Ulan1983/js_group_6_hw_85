@@ -1,17 +1,18 @@
 const express = require('express');
 
 const Track = require('../models/Track');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-	if (req.query.album) {
+router.get('/', auth, async (req, res) => {
+	if (req.user && req.query.album) {
 		try {
-			const track = await Track.find({album: req.query.album}).sort({number: 1});
+			const tracks = await Track.find({album: req.query.album}).populate('album').sort({number: 1});
 
-			if (!track) {
+			if (!tracks) {
 				return res.status(404).send({message: "Not found"})
-			} return res.send(track);
+			} return res.send(tracks);
 		} catch (e) {
 			return res.status(404).send({message: "Not found", e});
 		}

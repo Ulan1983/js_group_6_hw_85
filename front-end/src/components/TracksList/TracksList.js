@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardBody, CardText} from "reactstrap";
+import {Button, Card, CardBody, CardText} from "reactstrap";
 
 const TracksList = props => {
 	return (
@@ -17,6 +17,12 @@ const TracksList = props => {
 					<b>Длительность: </b>
 					{props.duration}
 				</CardText>
+				<Button type="submit"
+						color="primary"
+						onClick={props.onClick}
+				>
+					Добавить в историю
+				</Button>
 			</CardBody>
 		</Card>
 	);

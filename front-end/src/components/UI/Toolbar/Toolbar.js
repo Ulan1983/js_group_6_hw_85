@@ -13,7 +13,7 @@ const Toolbar = () => {
 			<NavbarBrand tag={RouterNavLink} to="/">Music</NavbarBrand>
 			<Nav className="ml-auto" navbar>
 				{user ? (
-					<UserMenu user={user}/>
+						<UserMenu user={user}/>
 				) : (
 					<AnonymousMenu/>
 				)}

@@ -23,7 +23,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	if (req.query.artist) {
 		try {
-			const album = await Album.find({artist: req.query.artist}).sort({releaseYear: 1});
+			const album = await Album.find({artist: req.query.artist}).sort({releaseYear: 1}).populate('artist');
 			if (!album) {
 				return res.status(404).send({message: "Not found"})
 			} return res.send(album);
