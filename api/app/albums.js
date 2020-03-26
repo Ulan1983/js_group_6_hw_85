@@ -4,6 +4,8 @@ const nanoid = require('nanoid');
 const multer = require('multer');
 
 const config = require('../config');
+const auth = require('../middleware/auth');
+const permit = require('../middleware/permit');
 
 const Album = require('../models/Album');
 
@@ -23,7 +25,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	if (req.query.artist) {
 		try {
-			const album = await Album.find({artist: req.query.artist}).sort({releaseYear: 1}).populate('artist');
+			const album = await Album.find({artist: req.query.artist}).sort({releaseYear: 1});
 			if (!album) {
 				return res.status(404).send({message: "Not found"})
 			} return res.send(album);
@@ -58,14 +60,21 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', [auth, permit('user', 'admin'), upload.single('image')], async (req, res) => {
 	const albumData = req.body;
+	const user = req.user._id;
 
 	if (req.file) {
 		albumData.image = req.file.filename;
 	}
 
-	const album = new Album(albumData);
+	const album = new Album({
+		title: albumData.title,
+		releaseYear: albumData.releaseYear,
+		image: albumData.image,
+		artist: albumData.artist,
+		user: user
+	});
 
 	try {
 		await album.save();

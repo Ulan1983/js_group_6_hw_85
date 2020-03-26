@@ -19,6 +19,15 @@ const AlbumSchema = new Schema({
 		type: Schema.Types.ObjectID,
 		ref: "Artist",
 		required: true
+	},
+	user: {
+		type: mongoose.Schema.Types.ObjectID,
+		ref: 'User',
+		required: true
+	},
+	published: {
+		type: Boolean,
+		default: false
 	}
 });
 

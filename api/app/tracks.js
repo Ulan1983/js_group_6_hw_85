@@ -1,12 +1,13 @@
 const express = require('express');
 
-const Track = require('../models/Track');
 const auth = require('../middleware/auth');
+const permit = require('../middleware/permit');
+const Track = require('../models/Track');
 
 const router = express.Router();
 
-router.get('/', auth, async (req, res) => {
-	if (req.user && req.query.album) {
+router.get('/', async (req, res) => {
+	if (req.query.album) {
 		try {
 			const tracks = await Track.find({album: req.query.album}).populate('album').sort({number: 1});
 
@@ -30,8 +31,16 @@ router.get('/', auth, async (req, res) => {
 	}
 });
 
-router.post('/', async (req, res) => {
-	const track = new Track(req.body);
+router.post('/', [auth, permit('user', 'admin')], async (req, res) => {
+	const user = req.user._id;
+	const number = await Track.find({album: req.body.album});
+	const track = new Track({
+		title: req.body.title,
+		number: number.length + 1,
+		duration: req.body.duration,
+		album: req.body.album,
+		user: user
+	});
 	try {
 		await track.save();
 

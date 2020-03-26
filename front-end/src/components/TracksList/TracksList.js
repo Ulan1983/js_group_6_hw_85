@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Card, CardBody, CardText} from "reactstrap";
+import ShowTo from "../../hoc/ShowTo";
 
 const TracksList = props => {
 	return (
@@ -23,6 +24,9 @@ const TracksList = props => {
 				>
 					Добавить в историю
 				</Button>
+				<ShowTo role='admin'>
+						<Button type="submit" color="primary" style={{marginLeft: '20px'}}>Delete</Button>
+				</ShowTo>
 			</CardBody>
 		</Card>
 	);

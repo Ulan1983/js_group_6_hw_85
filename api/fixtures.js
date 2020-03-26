@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const config = require('./config');
+const nanoid =require('nanoid');
 
 const Artist = require('./models/Artist');
 const Album = require('./models/Album');
 const Track = require('./models/Track');
+const User = require('./models/User');
 
 const run = async () => {
 	await mongoose.connect(config.database, config.databaseOptions);
@@ -14,50 +16,61 @@ const run = async () => {
 		await mongoose.connection.db.dropCollection(coll.name);
 	}
 
+	await User.create({
+		username: 'user',
+		password: '123',
+		token: nanoid()
+	}, {
+		username: 'admin',
+		password: 'admin123',
+		role: 'admin',
+		token: nanoid()
+	});
+
 	const [art1, art2, art3] = await Artist.create({
 		name: 'Alicia Keys',
-		image: 'alicia-keys.jpg'
+		image: 'fixtures/alicia-keys.jpg'
 	}, {
 		name: 'Armin van Buuren',
-		image: 'van_buuren.jpeg'
+		image: 'fixtures/van_buuren.jpeg'
 	}, {
 		name: 'Metallica',
-		image: 'metallica.jpeg'
+		image: 'fixtures/metallica.jpeg'
 	});
 
 	const [alb1, alb2, alb3, alb4, alb5, alb6] = await Album.create({
 		title: 'As I Am',
 		releaseYear: '2007',
-		image: 'as_i_am.jpg',
+		image: 'fixtures/as_i_am.jpg',
 		artist: art1
 	}, {
 		title: 'The Diary of Alicia Keys',
 		releaseYear: '2003',
-		image: 'the_diary.jpg',
+		image: 'fixtures/the_diary.jpg',
 		artist: art1
 	}, {
 		title: 'Mirage',
 		releaseYear: '2010',
-		image: 'Mirage.jpg',
+		image: 'fixtures/Mirage.jpg',
 		artist: art2
 	}, {
 		title: 'Intense',
 		releaseYear: '2013',
-		image: 'intense.jpg',
+		image: 'fixtures/intense.jpg',
 		artist: art2
 	}, {
 		title: 'Load',
 		releaseYear: '1996',
-		image: 'load.jpg',
+		image: 'fixtures/load.jpg',
 		artist: art3
 	}, {
 		title: 'ReLoad',
 		releaseYear: '1997',
-		image: 'reload.jpg',
+		image: 'fixtures/reload.jpg',
 		artist: art3
 	});
 
-	const [tr1, tr2, tr3, tr4, tr5, tr6, tr7, tr8, tr9, tr10, tr11, tr12, tr13, tr14, tr15, tr16, tr17, tr18] = await Track.create({
+	await Track.create({
 		number: '3',
 		title: 'Diary',
 		duration: '4:45',
@@ -71,6 +84,16 @@ const run = async () => {
 		number: '1',
 		title: 'Wake up',
 		duration: '4:27',
+		album: alb2
+	}, {
+		number: '4',
+		title: 'Dragon Days',
+		duration: '4:36',
+		album: alb2
+	}, {
+		number: '5',
+		title: 'Nobody Not Really',
+		duration: '2:56',
 		album: alb2
 	}, {
 		number: '1',
@@ -88,6 +111,16 @@ const run = async () => {
 		duration: '1:52',
 		album: alb1
 	}, {
+		number: '4',
+		title: 'Go Ahead',
+		duration: '4:36',
+		album: alb1
+	}, {
+		number: '5',
+		title: 'Prelude to a Kiss',
+		duration: '2:08',
+		album: alb1
+	}, {
 		number: '3',
 		title: 'Mirage',
 		duration: '6:41',
@@ -101,6 +134,16 @@ const run = async () => {
 		number: '1',
 		title: 'Coming home',
 		duration: '6:20',
+		album: alb3
+	}, {
+		number: '4',
+		title: 'Feels So Good',
+		duration: '3:58',
+		album: alb3
+	}, {
+		number: '5',
+		title: 'Virtual Friend',
+		duration: '7:11',
 		album: alb3
 	}, {
 		number: '1',
@@ -118,6 +161,16 @@ const run = async () => {
 		duration: '4:04',
 		album: alb4
 	}, {
+		number: '4',
+		title: 'This is What it Feels Like',
+		duration: '3:23',
+		album: alb4
+	}, {
+		number: '5',
+		title: 'Last Stop Before Heaven',
+		duration: '6:27',
+		album: alb4
+	}, {
 		number: '1',
 		title: 'Until It Sleeps',
 		duration: '4:29',
@@ -133,6 +186,16 @@ const run = async () => {
 		duration: '4:54',
 		album: alb5
 	}, {
+		number: '4',
+		title: 'Ronnie',
+		duration: '5:17',
+		album: alb5
+	}, {
+		number: '5',
+		title: 'Poor Twisted Me',
+		duration: '4:00',
+		album: alb5
+	}, {
 		number: '1',
 		title: 'Fuel',
 		duration: '4:29',
@@ -146,6 +209,16 @@ const run = async () => {
 		number: '3',
 		title: 'Attitude',
 		duration: '5:15',
+		album: alb6
+	}, {
+		number: '4',
+		title: 'The Memory Remains',
+		duration: '4:39',
+		album: alb6
+	}, {
+		number: '5',
+		title: 'Bad Seed',
+		duration: '4:05',
 		album: alb6
 	});
 

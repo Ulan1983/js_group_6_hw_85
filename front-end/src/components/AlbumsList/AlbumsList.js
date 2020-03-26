@@ -1,7 +1,8 @@
 import React from 'react';
-import {Card, CardBody, CardText} from "reactstrap";
+import {Button, Card, CardBody, CardText} from "reactstrap";
 import Thumbnail from "../Thumbnail/Thumbnail";
 import {Link} from "react-router-dom";
+import ShowTo from "../../hoc/ShowTo";
 
 const AlbumsList = props => {
 	return (
@@ -18,6 +19,9 @@ const AlbumsList = props => {
 						{props.releaseYear}
 					</CardText>
 				</Link>
+				<ShowTo role='admin'>
+						<Button type="submit" color="primary" style={{marginLeft: '20px', marginTop: '10px'}}>Delete</Button>
+				</ShowTo>
 			</CardBody>
 		</Card>
 	);

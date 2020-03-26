@@ -8,6 +8,15 @@ const ArtistSchema = new mongoose.Schema({
 	image: {
 		type: String,
 		required: true
+	},
+	published: {
+		type: Boolean,
+		default: false
+	},
+	user: {
+		type: mongoose.Schema.Types.ObjectID,
+		ref: 'User',
+		required: true
 	}
 });
 

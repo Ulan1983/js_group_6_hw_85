@@ -4,6 +4,8 @@ const nanoid = require('nanoid');
 const multer = require('multer');
 
 const config = require('../config');
+const auth = require('../middleware/auth');
+const permit = require('../middleware/permit');
 
 const Artist = require('../models/Artist');
 
@@ -46,14 +48,19 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
+router.post('/', [auth, permit('user', 'admin'), upload.single('image')], async (req, res) => {
 	const artistData = req.body;
+	const user = req.user._id;
 
 	if (req.file) {
 		artistData.image = req.file.filename;
 	}
 
-	const artist = new Artist(artistData);
+	const artist = new Artist({
+		name: artistData.name,
+		image: artistData.image,
+		user: user,
+	});
 
 	try {
 		await artist.save();
