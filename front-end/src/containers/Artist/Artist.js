@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {fetchArtist} from "../../store/actions/artistsActions";
 import {connect} from "react-redux";
-import {fetchArtistAlbums} from "../../store/actions/albumsActions";
+import {deleteAlbum, fetchArtistAlbums} from "../../store/actions/albumsActions";
 import AlbumsList from "../../components/AlbumsList/AlbumsList";
 
 class Artist extends Component {
@@ -10,18 +10,18 @@ class Artist extends Component {
 		this.props.fetchArtistAlbums(this.props.match.params.id);
 	}
 
-
 	render() {
 		return (
 			<Fragment>
 				<h3><b>Исполнитель: </b>{this.props.artist}</h3>
-				{this.props.albums.map(album => (
+				{this.props.albums && this.props.albums.map(album => (
 					<AlbumsList
 						key={album._id}
 						title={album.title}
 						id={album._id}
 						releaseYear={album.releaseYear}
 						image={album.image}
+						delete={() => this.props.deleteAlbum(album._id)}
 					/>
 				))}
 			</Fragment>
@@ -36,6 +36,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	fetchArtist: id => dispatch(fetchArtist(id)),
-	fetchArtistAlbums: id => dispatch(fetchArtistAlbums(id))
+	fetchArtistAlbums: id => dispatch(fetchArtistAlbums(id)),
+	deleteAlbum: id => dispatch(deleteAlbum(id))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);

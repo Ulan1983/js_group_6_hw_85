@@ -8,11 +8,17 @@ export const FETCH_ALBUM_SUCCESS = 'FETCH_ALBUM_SUCCESS';
 export const CREATE_ALBUM_SUCCESS = 'CREATE_ALBUM_SUCCESS';
 export const CREATE_ALBUM_ERROR = 'CREATE_ALBUM_ERROR';
 
+export const DELETE_ALBUM_SUCCESS = 'DELETE_ALBUM_SUCCESS';
+export const DELETE_ALBUM_ERROR = 'DELETE_ALBUM_ERROR';
+
 export const fetchAlbumsSuccess = albums => ({type: FETCH_ALBUMS_SUCCESS, albums});
 export const fetchAlbumSuccess = album => ({type: FETCH_ALBUM_SUCCESS, album});
 
 export const createAlbumSuccess = () => ({type: CREATE_ALBUM_SUCCESS});
 export const createAlbumError = error => ({type: CREATE_ALBUM_ERROR, error});
+
+export const deleteAlbumSuccess = () => ({type: DELETE_ALBUM_SUCCESS});
+export const deleteAlbumError = error => ({type: DELETE_ALBUM_ERROR, error});
 
 export const fetchAlbums = () => {
 	return async (dispatch) => {
@@ -55,6 +61,18 @@ export const createAlbum = albumData => {
 			dispatch(push('/'));
 		} catch (error) {
 			dispatch(createAlbumError(error));
+		}
+	}
+};
+
+export const deleteAlbum = id => {
+	return async (dispatch) => {
+		try {
+			await axiosApi.delete('/albums/' + id);
+			dispatch(deleteAlbumSuccess());
+			dispatch(push('/'));
+		} catch (error) {
+			dispatch(deleteAlbumError(error));
 		}
 	}
 };

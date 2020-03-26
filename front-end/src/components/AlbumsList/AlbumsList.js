@@ -20,7 +20,14 @@ const AlbumsList = props => {
 					</CardText>
 				</Link>
 				<ShowTo role='admin'>
-						<Button type="submit" color="primary" style={{marginLeft: '20px', marginTop: '10px'}}>Delete</Button>
+						<Button
+							type="submit"
+							color="primary"
+							style={{marginLeft: '20px', marginTop: '10px'}}
+							onClick={props.delete}
+						>
+							Delete
+						</Button>
 				</ShowTo>
 			</CardBody>
 		</Card>

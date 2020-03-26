@@ -50,4 +50,14 @@ router.post('/', [auth, permit('user', 'admin')], async (req, res) => {
 	}
 });
 
+router.delete('/:id', [auth, permit('admin')], async (req, res) => {
+	try {
+		await Track.deleteOne({_id: req.params.id});
+
+		return res.send({message: 'Deleted successfully!'});
+	} catch (e) {
+		return res.status(400).send(e);
+	}
+});
+
 module.exports = router;

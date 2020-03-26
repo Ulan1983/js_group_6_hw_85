@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {fetchArtists} from "../../store/actions/artistsActions";
+import {deleteArtist, fetchArtists} from "../../store/actions/artistsActions";
 import {connect} from "react-redux";
 import ArtistsList from "../../components/ArtistsList/ArtistsList";
 
@@ -8,15 +8,21 @@ class Artists extends Component {
 		this.props.fetchArtists();
 	}
 
+	deleteArtist = async (id) => {
+		await this.props.deleteArtist(id);
+		await this.props.fetchArtists();
+	};
+
 	render() {
 		return (
 			<Fragment>
-				{this.props.artists.map(artist => (
+				{this.props.artists && this.props.artists.map(artist => (
 					<ArtistsList
 						key={artist._id}
 						name={artist.name}
 						id={artist._id}
 						image={artist.image}
+						delete={() => this.deleteArtist(artist._id)}
 					/>
 				))}
 			</Fragment>
@@ -29,7 +35,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	fetchArtists: () => dispatch(fetchArtists())
+	fetchArtists: () => dispatch(fetchArtists()),
+	deleteArtist: id => dispatch(deleteArtist(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artists);

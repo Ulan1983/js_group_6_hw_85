@@ -7,10 +7,16 @@ export const FETCH_TRACKS_SUCCESS = 'FETCH_TRACKS_SUCCESS';
 export const CREATE_TRACK_SUCCESS = 'CREATE_TRACK_SUCCESS';
 export const CREATE_TRACK_ERROR = 'CREATE_TRACK_ERROR';
 
+export const DELETE_TRACK_SUCCESS = 'DELETE_TRACK_SUCCESS';
+export const DELETE_TRACK_ERROR = 'DELETE_TRACK_ERROR';
+
 export const fetchTracksSuccess = tracks => ({type: FETCH_TRACKS_SUCCESS, tracks});
 
 export const createTrackSuccess = () => ({type: CREATE_TRACK_SUCCESS});
 export const createTrackError = error => ({type: CREATE_TRACK_ERROR, error});
+
+export const deleteTrackSuccess = () => ({type: DELETE_TRACK_SUCCESS});
+export const deleteTrackError = error => ({type: DELETE_TRACK_ERROR, error});
 
 // export const fetchTracks = () => {
 // 	return async (dispatch) => {
@@ -42,6 +48,18 @@ export const createTrack = trackData => {
 			dispatch(push('/'));
 		} catch (error) {
 			dispatch(createTrackError(error));
+		}
+	}
+};
+
+export const deleteTrack = id => {
+	return async (dispatch) => {
+		try {
+			await axiosApi.delete('/tracks/' + id);
+			dispatch(deleteTrackSuccess());
+			dispatch(push('/'));
+		} catch (error) {
+			dispatch(deleteTrackError(error));
 		}
 	}
 };

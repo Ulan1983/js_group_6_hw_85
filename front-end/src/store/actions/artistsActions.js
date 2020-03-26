@@ -8,11 +8,17 @@ export const FETCH_ARTIST_SUCCESS = 'FETCH_ARTIST_SUCCESS';
 export const CREATE_ARTIST_SUCCESS = 'CREATE_ARTIST_SUCCESS';
 export const CREATE_ARTIST_ERROR = 'CREATE_ARTIST_ERROR';
 
+export const DELETE_ARTIST_SUCCESS = 'DELETE_ARTIST_SUCCESS';
+export const DELETE_ARTIST_ERROR = 'DELETE_ARTIST_ERROR';
+
 export const fetchArtistsSuccess = artists => ({type: FETCH_ARTISTS_SUCCESS, artists});
 export const fetchArtistSuccess = artist => ({type: FETCH_ARTIST_SUCCESS, artist});
 
 export const createArtistSuccess = () => ({type: CREATE_ARTIST_SUCCESS});
 export const createArtistError = error => ({type: CREATE_ARTIST_ERROR, error});
+
+export const deleteArtistSuccess = () => ({type: DELETE_ARTIST_SUCCESS});
+export const deleteArtistError = error => ({type: DELETE_ARTIST_ERROR, error});
 
 export const fetchArtists = () => {
 	return async (dispatch) => {
@@ -44,6 +50,18 @@ export const createArtist = artistData => {
 			dispatch(push('/'));
 		} catch (error) {
 			dispatch(createArtistError(error));
+		}
+	}
+};
+
+export const deleteArtist = id => {
+	return async (dispatch) => {
+		try {
+			await axiosApi.delete('/artists/' + id);
+			dispatch(deleteArtistSuccess());
+			dispatch(push('/'));
+		} catch (error) {
+			dispatch(deleteArtistError(error));
 		}
 	}
 };

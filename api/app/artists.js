@@ -8,6 +8,8 @@ const auth = require('../middleware/auth');
 const permit = require('../middleware/permit');
 
 const Artist = require('../models/Artist');
+const Album = require('../models/Album');
+const Track = require('../models/Track');
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -69,6 +71,21 @@ router.post('/', [auth, permit('user', 'admin'), upload.single('image')], async 
 	} catch (e) {
 		return res.status(400).send(e);
 	}
+});
+
+router.delete('/:id', [auth, permit('admin')], async (req, res) => {
+	await Artist.deleteOne({_id: req.params.id});
+
+	await Album.find({artist: req.params.id}).then(result => {
+		result.forEach(album => {
+			Track.deleteMany({album: album._id})
+				.catch(error => res.status(400).send(error))
+		})
+	});
+	await Album.deleteMany({artist: req.params.id});
+
+	res.send({message: 'Deleted successfully!'});
+
 });
 
 module.exports = router;

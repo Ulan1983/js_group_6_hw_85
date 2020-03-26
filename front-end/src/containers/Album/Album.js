@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {fetchAlbum} from "../../store/actions/albumsActions";
 import {connect} from "react-redux";
-import {fetchAlbumTracks} from "../../store/actions/tracksActions";
+import {deleteTrack, fetchAlbumTracks} from "../../store/actions/tracksActions";
 import TracksList from "../../components/TracksList/TracksList";
 import {addTrackToTrackHistory} from "../../store/actions/trackHistoryActions";
 
@@ -17,7 +17,6 @@ class Album extends Component {
 		this.props.addTrackToTrackHistory({track: trackData});
 	};
 
-
 	render() {
 		return (
 			<Fragment>
@@ -32,6 +31,7 @@ class Album extends Component {
 						title={track.title}
 						duration={track.duration}
 						onClick={() => this.submitTrackToTrackHistory(track._id)}
+						delete={() => this.props.deleteTrack(track._id)}
 					/>
 				))}
 			</Fragment>
@@ -49,7 +49,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	fetchAlbum: id => dispatch(fetchAlbum(id)),
 	fetchAlbumTracks: id => dispatch(fetchAlbumTracks(id)),
-	addTrackToTrackHistory: trackData => dispatch(addTrackToTrackHistory(trackData))
+	addTrackToTrackHistory: trackData => dispatch(addTrackToTrackHistory(trackData)),
+	deleteTrack: id => dispatch(deleteTrack(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Album);
