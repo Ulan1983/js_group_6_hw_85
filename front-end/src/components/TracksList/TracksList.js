@@ -25,14 +25,24 @@ const TracksList = props => {
 					Добавить в историю
 				</Button>
 				<ShowTo role='admin'>
-						<Button
-							type="submit"
-							color="primary"
-							style={{marginLeft: '20px'}}
-							onClick={props.delete}
-						>
-							Delete
-						</Button>
+					<Button
+						type="submit"
+						color="primary"
+						style={{marginLeft: '20px'}}
+						onClick={props.delete}
+					>
+						Delete
+					</Button>
+					{!props.published &&
+					<Button
+						type="submit"
+						color="primary"
+						style={{marginLeft: '20px'}}
+						onClick={props.publish}
+					>
+						Publish
+					</Button>
+					}
 				</ShowTo>
 			</CardBody>
 		</Card>

@@ -27,7 +27,8 @@ const TrackSchema = new Schema({
 	},
 	published: {
 		type: Boolean,
-		default: false
+		default: false,
+		required: true
 	}
 });
 

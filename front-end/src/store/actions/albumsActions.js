@@ -11,6 +11,9 @@ export const CREATE_ALBUM_ERROR = 'CREATE_ALBUM_ERROR';
 export const DELETE_ALBUM_SUCCESS = 'DELETE_ALBUM_SUCCESS';
 export const DELETE_ALBUM_ERROR = 'DELETE_ALBUM_ERROR';
 
+export const PUBLISH_ALBUM_SUCCESS = 'PUBLISH_ALBUM_SUCCESS';
+export const PUBLISH_ALBUM_ERROR = 'PUBLISH_ALBUM_ERROR';
+
 export const fetchAlbumsSuccess = albums => ({type: FETCH_ALBUMS_SUCCESS, albums});
 export const fetchAlbumSuccess = album => ({type: FETCH_ALBUM_SUCCESS, album});
 
@@ -19,6 +22,9 @@ export const createAlbumError = error => ({type: CREATE_ALBUM_ERROR, error});
 
 export const deleteAlbumSuccess = () => ({type: DELETE_ALBUM_SUCCESS});
 export const deleteAlbumError = error => ({type: DELETE_ALBUM_ERROR, error});
+
+export const publishAlbumSuccess = () => ({type: PUBLISH_ALBUM_SUCCESS});
+export const publishAlbumError = error => ({type: PUBLISH_ALBUM_ERROR, error});
 
 export const fetchAlbums = () => {
 	return async (dispatch) => {
@@ -73,6 +79,18 @@ export const deleteAlbum = id => {
 			dispatch(push('/'));
 		} catch (error) {
 			dispatch(deleteAlbumError(error));
+		}
+	}
+};
+
+export const publishAlbum = id => {
+	return async (dispatch) => {
+		try {
+			await axiosApi.post('/albums/' + id + '/published');
+			dispatch(publishAlbumSuccess());
+			dispatch(push('/'));
+		} catch (error) {
+			dispatch(publishAlbumError(error));
 		}
 	}
 };

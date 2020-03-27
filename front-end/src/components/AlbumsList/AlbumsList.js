@@ -20,14 +20,24 @@ const AlbumsList = props => {
 					</CardText>
 				</Link>
 				<ShowTo role='admin'>
-						<Button
-							type="submit"
-							color="primary"
-							style={{marginLeft: '20px', marginTop: '10px'}}
-							onClick={props.delete}
-						>
-							Delete
-						</Button>
+					<Button
+						type="submit"
+						color="primary"
+						style={{marginLeft: '20px', marginTop: '10px'}}
+						onClick={props.delete}
+					>
+						Delete
+					</Button>
+					{!props.published &&
+					<Button
+						type="submit"
+						color="primary"
+						style={{marginLeft: '20px', marginTop: '10px'}}
+						onClick={props.publish}
+					>
+						Publish
+					</Button>
+					}
 				</ShowTo>
 			</CardBody>
 		</Card>

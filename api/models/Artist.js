@@ -11,7 +11,8 @@ const ArtistSchema = new mongoose.Schema({
 	},
 	published: {
 		type: Boolean,
-		default: false
+		default: false,
+		required: true
 	},
 	user: {
 		type: mongoose.Schema.Types.ObjectID,

@@ -60,4 +60,17 @@ router.delete('/:id', [auth, permit('admin')], async (req, res) => {
 	}
 });
 
+router.post('/:id/published', [auth, permit('admin')], async (req, res) => {
+	try {
+		const track = await Track.findById(req.params.id);
+		track.published = true;
+
+		await track.save();
+
+		return res.send(track);
+	} catch (e) {
+		return res.status(400).send(e);
+	}
+});
+
 module.exports = router;
