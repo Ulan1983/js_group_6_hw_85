@@ -3,11 +3,14 @@ import {Button, Col, Form, FormGroup} from "reactstrap";
 import {registerUser} from "../../store/actions/usersActions";
 import {connect} from "react-redux";
 import FormElement from "../../components/UI/Form/FormElement";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
 class Register extends Component {
 	state = {
 		username: '',
-		password: ''
+		password: '',
+		displayName: '',
+		avatarImage: ''
 	};
 
 	inputChangeHandler = event => {
@@ -16,9 +19,22 @@ class Register extends Component {
 		})
 	};
 
+	fileChangeHandler = event => {
+		this.setState({
+			[event.target.name]: event.target.files[0]
+		})
+
+	};
+
 	submitFormHandler = event => {
 		event.preventDefault();
-		this.props.registerUser({...this.state});
+
+		const formData = new FormData();
+		Object.keys(this.state).forEach(key => {
+			formData.append(key, this.state[key]);
+		});
+
+		this.props.registerUser(formData);
 	};
 
 	getFieldError = fieldName => {
@@ -33,6 +49,8 @@ class Register extends Component {
 		return (
 			<>
 				<h2>Register new user</h2>
+				<FacebookLogin />
+
 				<Form onSubmit={this.submitFormHandler}>
 					<FormElement
 						propertyName="username"
@@ -44,6 +62,7 @@ class Register extends Component {
 						placeholder="Enter username"
 						autoComplete="new-username"
 					/>
+
 					<FormElement
 						propertyName="password"
 						title="Password"
@@ -53,6 +72,25 @@ class Register extends Component {
 						error={this.getFieldError('password')}
 						placeholder="Enter password"
 						autoComplete="new-password"
+					/>
+
+					<FormElement
+						propertyName="displayName"
+						title="DisplayName"
+						type="text"
+						value={this.state.displayName}
+						onChange={this.inputChangeHandler}
+						error={this.getFieldError('displayName')}
+						placeholder="Enter display name"
+						autoComplete="new-displayName"
+					/>
+
+					<FormElement
+						propertyName="avatarImage"
+						title="Avatar"
+						type="file"
+						onChange={this.fileChangeHandler}
+						error={this.getFieldError('avatarImage')}
 					/>
 					<FormGroup row>
 						<Col sm={{offset: 2, size: 10}}>

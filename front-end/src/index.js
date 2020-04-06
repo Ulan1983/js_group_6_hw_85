@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
 import {ConnectedRouter} from "connected-react-router";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import store, {history} from './store/configureStore';
 import App from './App';

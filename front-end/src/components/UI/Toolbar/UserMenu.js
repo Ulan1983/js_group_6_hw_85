@@ -2,6 +2,8 @@ import React from 'react';
 import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
 import {Link} from "react-router-dom";
 
+import {apiURL} from "../../../constants";
+
 const UserMenu = ({user, logout}) => {
 	return (
 		<UncontrolledDropdown nav inNavbar>
@@ -10,7 +12,14 @@ const UserMenu = ({user, logout}) => {
 			<Link to='/albums/new' style={{textDecoration: 'none', color: 'black', marginLeft: '10px'}}>Add album</Link>
 			<Link to='/tracks/new' style={{textDecoration: 'none', color: 'black', marginLeft: '10px'}}>Add track</Link>
 			<DropdownToggle nav caret>
-				Hello, {user.username}!
+				{user.facebookId ?
+					<img src={user.avatarImage} alt="avatarImage"
+						 style={{maxWidth: '50px', borderRadius: '50px', marginRight: '10px'}}/>
+					:
+					<img src={apiURL + '/uploads/' + user.avatarImage} alt="avatarImage"
+						 style={{maxWidth: '50px', borderRadius: '50px', marginRight: '10px'}}/>
+				}
+				Hello, {user.displayName}!
 			</DropdownToggle>
 			<DropdownMenu right>
 				<DropdownItem>
